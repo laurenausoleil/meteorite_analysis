@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# I don't understand why this doesn't work.
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(assertr)
+
+meteor_raw <- read_csv("data/meteorite_landings.csv")
+```
+
+
+This returns 'Error in rlang::eval_tidy(expr, data, parent.frame()) : argument "expr" is missing, with no default,
+```{r}
+verify(
+  all(
+    colnames(meteor_raw) == c("id", "name", "mass (g)", "fall", "year", "GeoLocation")
+  )
+)
+```
+But this definitely returns a logical!
+```{r}
+all(
+    colnames(meteor_raw) == c("id", "name", "mass (g)", "fall", "year", "GeoLocation")
+  )
+
+class(all(
+    colnames(meteor_raw) == c("id", "name", "mass (g)", "fall", "year", "GeoLocation")
+  ))
+```
+
