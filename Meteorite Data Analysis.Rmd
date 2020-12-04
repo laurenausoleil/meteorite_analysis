@@ -1,0 +1,112 @@
+---
+title: "Meteorite Data Analysis"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+
+large_meteors <- read_csv("data/meteor_over_1000")
+all_meteors <- read_csv("data/meteor_clean.csv")
+na_meteors <- read_csv("data/meteor_with_nas")
+```
+
+
+# Find the names and years found for the 10 largest meteorites in the data.
+
+The 10 largest meteorites in this dataset were all found prior to 1947.
+
+```{r}
+large_meteors %>% 
+  select(-id) %>% 
+  slice_max(mass_in_grams, n = 10) %>% 
+  print()
+```
+
+# Find the average mass of meteorites that were recorded falling, vs. those which were just found.
+
+```{r}
+large_meteors %>% 
+  group_by(fall) %>% 
+  summarise(
+    average_mass = mean(mass_in_grams, na.rm = TRUE),
+    count = n()
+  ) %>% 
+  print()
+```
+Those which were found have a significantly larger average mass than those which were found. I wonder if this has any relation to time.
+My question to explore will be whether average size of a meteor recorded falling gets smaller over time. I am assuming that the larger meteors fell long ago and are being discovered over time, rather than that we still have large meteors falling now.
+Another possibility is that we are more likely to notice meteors either in transit or if they have a large footprint, therefore we are more likely to find larger meteors than small. I don't know how to explore this further.
+It may also be that smaller meteor findings are not reported.
+
+```{r}
+all_meteors %>% 
+  group_by(fall) %>% 
+  summarise(
+    average_mass = mean(mass_in_grams, na.rm = TRUE),
+    count = n()
+  ) %>% 
+  print()
+```
+When we run the same analysis on all meteors, a dataframe where we include meteors under 1000g, we find that meteors recorded while fallen have a higher average mass than those found, although the difference is less significant.
+
+When we look at the count we find that only 381 meteors under 1000 grams were recorded when falling, while 40,512 meteors under 1000 grams have been recorded as found. This makes sense, as we are more likely to find a small meteor on the ground than in space, due to probability.
+
+I don't think that summarising the average size of a meteor depending on whether it has been recorded when falling or after the fact provides us with much insight.
+
+# Find the number of meteorites in each year, for every year since 2000.
+
+```{r}
+large_meteors %>% 
+  select(year, id) %>% 
+  filter(year > 2000) %>% 
+  group_by(year) %>% 
+  summarise(number_of_meteors_recorded = sum(unique(id)))
+```
+
+# Does average size of a meteor recorded falling change over time?
+No obvious pattern identified. May be worth exploring with a graph.
+
+```{r}
+all_meteors %>% 
+  filter(fall == "Fell") %>% 
+  select(year, mass_in_grams) %>% 
+  group_by(year) %>% 
+  summarise(average_size = mean(mass_in_grams))
+```
+
+```{r}
+all_meteors %>% 
+  filter(fall == "Fell") %>% 
+  select(year, mass_in_grams) %>%
+  drop_na(year) %>%
+
+  # Group years into centuries
+  mutate(
+    year = case_when(
+      year < 1600 ~ "1500s",
+      year < 1700 ~ "1600s",
+      year < 1800 ~ "1700s",
+      year < 1900 ~ "1800s",
+      year < 2000 ~ "1900s",
+      year < 2100 ~ "2000s",
+      year < 2200 ~ "2100s"
+    )
+  ) %>% 
+  group_by(year) %>% 
+  summarise(average_size = mean(mass_in_grams, na.rm = TRUE))
+```
+
+# What is fell and found in fall?
+Not obvious from the website, but the CodeClan questions helpfully point out that "Fell" means that the meteor was recorded when it fell and "Found" means the meteor was found after it had fallen.
+
+# Does the amount of data recorded vary by time?
+
+```{r}
+all_meteors
+```
+
+
+
+
+# Does the amount of data recorded vary by location?

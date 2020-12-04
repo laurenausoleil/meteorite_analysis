@@ -54,9 +54,10 @@ meteor_clean <- meteor_clean %>%
     longitude = as.numeric(str_remove(longitude, "\\)"))
   )
 
+meteor_keep_nas <- meteor_clean
+
 # Replace any missing values in latitude and longitude with zeros
 # per questions
-# Note that there are no NAs in these columns for this dataset
 
 meteor_clean <- meteor_clean %>% 
   mutate(
@@ -72,6 +73,9 @@ meteor_clean <- meteor_clean %>%
 
 meteor_clean[29436, "latitude"] <- NA
 meteor_clean[29436, "longitude"] <- NA
+
+meteor_keep_nas[29436, "latitude"] <- NA
+meteor_keep_nas[29436, "longitude"] <- NA
 
 # To ensure latitude and longitude are valid values. (Latitude between -90 and 90, longitude between -180 and 180).
 # per questions
@@ -90,6 +94,9 @@ meteor_clean %>%
 meteor_clean <- meteor_clean %>% 
   rename(mass_in_grams = mass_g)
 
+meteor_keep_nas<- meteor_keep_nas %>% 
+  rename(mass_in_grams = mass_g)
+
 # Remove meteorites less than 1000g in weight from the data.
 # per questions
 # Removes 40893 observations so I created a new variable
@@ -105,3 +112,9 @@ meteor_clean_over_1000 <- meteor_clean_over_1000 %>%
 
 meteor_clean <- meteor_clean %>% 
   arrange(year)
+
+#Export as .csv
+
+write_csv(meteor_clean, "data/meteor_clean.csv")
+write_csv(meteor_clean_over_1000, "data/meteor_over_1000")
+write_csv(meteor_keep_nas, "data/meteor_with_nas")
