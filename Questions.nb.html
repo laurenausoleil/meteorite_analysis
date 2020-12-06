@@ -1797,32 +1797,53 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<div id="for-this-weekend-homework-you-will-create-an-r-project-with-two-pieces-of-code" class="section level1">
-<h1>For this weekend homework you will create an R project with two pieces of code:</h1>
-<p>x An .R file that cleans some data on meteorites. A .Rmd file that takes your cleaned data and performs some analysis. You will also write a short README.md that describes the structure of your project.</p>
-</div>
-<div id="x-1.1-the-.r-file" class="section level1">
-<h1>x 1.1 The .R file</h1>
-<p>To clean the data please do the following.</p>
-<p>Read the data into R Change the names of the variables to follow our naming standards. Split in column GeoLocation into latitude and longitude, the new latitude and longitude columns should be numeric. Replace any missing values in latitude and longitude with zeros. Remove meteorites less than 1000g in weight from the data. Order the data by the year of discovery. We would also like you to include assertive programming to make sure that:</p>
-<p>The data has the variable names we expect (“id”, “name”, “mass (g)”, “fall”, “year”, “GeoLocation”). Latitude and longitude are valid values. (Latitude between -90 and 90, longitude between -180 and 180).</p>
-</div>
-<div id="the-.rmd-file" class="section level1">
-<h1>1.2 The .Rmd file</h1>
-<p>In the .Rmd file please do the following.</p>
-<p>Read the cleaned data into R. Find the names and years found for the 10 largest meteorites in the data. Find the average mass of meteorites that were recorded falling, vs. those which were just found. Find the number of meteorites in each year, for every year since 2000.</p>
-</div>
-<div id="the-project-structure" class="section level1">
-<h1>1.3 The project structure</h1>
-<p>Make sure your use an RStudio Project. Make a new repo on GitHub (not your normal homework repo) and commit your code to this repo regularly - we will be checking the number of commits. It is up to you how to store your code and data. Make sure it is clear for others using the project.</p>
-</div>
-<div id="my-questions" class="section level1">
-<h1>My Questions</h1>
-<p>What is fell and found in fall Oldest meteors Average location of a meteor fall Most found by latitude and longitude Year with the highest number of meteors</p>
+<div id="i-dont-understand-why-this-doesnt-work." class="section level1">
+<h1>I don’t understand why this doesn’t work.</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGphbml0b3IpXG5saWJyYXJ5KGFzc2VydHIpXG5cbm1ldGVvcl9yYXcgPC0gcmVhZF9jc3YoXCJkYXRhL21ldGVvcml0ZV9sYW5kaW5ncy5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code>library(tidyverse)
+library(janitor)
+library(assertr)
+
+meteor_raw &lt;- read_csv(&quot;data/meteorite_landings.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>This returns ’Error in rlang::eval_tidy(expr, data, parent.frame()) : argument “expr” is missing, with no default,</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmVyaWZ5KFxuICBhbGwoXG4gICAgY29sbmFtZXMobWV0ZW9yX3JhdykgPT0gYyhcImlkXCIsIFwibmFtZVwiLCBcIm1hc3MgKGcpXCIsIFwiZmFsbFwiLCBcInllYXJcIiwgXCJHZW9Mb2NhdGlvblwiKVxuICApXG4pXG5gYGAifQ== -->
+<pre class="r"><code>verify(
+  all(
+    colnames(meteor_raw) == c(&quot;id&quot;, &quot;name&quot;, &quot;mass (g)&quot;, &quot;fall&quot;, &quot;year&quot;, &quot;GeoLocation&quot;)
+  )
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gcmxhbmc6OmV2YWxfdGlkeShleHByLCBkYXRhLCBwYXJlbnQuZnJhbWUoKSkgOiBcbiAgYXJndW1lbnQgXCJleHByXCIgaXMgbWlzc2luZywgd2l0aCBubyBkZWZhdWx0XG4ifQ== -->
+<pre><code>Error in rlang::eval_tidy(expr, data, parent.frame()) : 
+  argument &quot;expr&quot; is missing, with no default</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>But this definitely returns a logical!</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xhc3MoYWxsKFxuICAgIGNvbG5hbWVzKG1ldGVvcl9yYXcpID09IGMoXCJpZFwiLCBcIm5hbWVcIiwgXCJtYXNzIChnKVwiLCBcImZhbGxcIiwgXCJ5ZWFyXCIsIFwiR2VvTG9jYXRpb25cIilcbiAgKSlcblxuYGBgIn0= -->
+<pre class="r"><code>class(all(
+    colnames(meteor_raw) == c(&quot;id&quot;, &quot;name&quot;, &quot;mass (g)&quot;, &quot;fall&quot;, &quot;year&quot;, &quot;GeoLocation&quot;)
+  ))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwibG9naWNhbFwiXG4ifQ== -->
+<pre><code>[1] &quot;logical&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBGb3IgdGhpcyB3ZWVrZW5kIGhvbWV3b3JrIHlvdSB3aWxsIGNyZWF0ZSBhbiBSIHByb2plY3Qgd2l0aCB0d28gcGllY2VzIG9mIGNvZGU6Cgp4IEFuIC5SIGZpbGUgdGhhdCBjbGVhbnMgc29tZSBkYXRhIG9uIG1ldGVvcml0ZXMuCkEgLlJtZCBmaWxlIHRoYXQgdGFrZXMgeW91ciBjbGVhbmVkIGRhdGEgYW5kIHBlcmZvcm1zIHNvbWUgYW5hbHlzaXMuCllvdSB3aWxsIGFsc28gd3JpdGUgYSBzaG9ydCBSRUFETUUubWQgdGhhdCBkZXNjcmliZXMgdGhlIHN0cnVjdHVyZSBvZiB5b3VyIHByb2plY3QuCgojIHggMS4xIFRoZSAuUiBmaWxlClRvIGNsZWFuIHRoZSBkYXRhIHBsZWFzZSBkbyB0aGUgZm9sbG93aW5nLgoKUmVhZCB0aGUgZGF0YSBpbnRvIFIKQ2hhbmdlIHRoZSBuYW1lcyBvZiB0aGUgdmFyaWFibGVzIHRvIGZvbGxvdyBvdXIgbmFtaW5nIHN0YW5kYXJkcy4KU3BsaXQgaW4gY29sdW1uIEdlb0xvY2F0aW9uIGludG8gbGF0aXR1ZGUgYW5kIGxvbmdpdHVkZSwgdGhlIG5ldyBsYXRpdHVkZSBhbmQgbG9uZ2l0dWRlIGNvbHVtbnMgc2hvdWxkIGJlIG51bWVyaWMuClJlcGxhY2UgYW55IG1pc3NpbmcgdmFsdWVzIGluIGxhdGl0dWRlIGFuZCBsb25naXR1ZGUgd2l0aCB6ZXJvcy4KUmVtb3ZlIG1ldGVvcml0ZXMgbGVzcyB0aGFuIDEwMDBnIGluIHdlaWdodCBmcm9tIHRoZSBkYXRhLgpPcmRlciB0aGUgZGF0YSBieSB0aGUgeWVhciBvZiBkaXNjb3ZlcnkuCldlIHdvdWxkIGFsc28gbGlrZSB5b3UgdG8gaW5jbHVkZSBhc3NlcnRpdmUgcHJvZ3JhbW1pbmcgdG8gbWFrZSBzdXJlIHRoYXQ6CgpUaGUgZGF0YSBoYXMgdGhlIHZhcmlhYmxlIG5hbWVzIHdlIGV4cGVjdCAo4oCcaWTigJ0sIOKAnG5hbWXigJ0sIOKAnG1hc3MgKGcp4oCdLCDigJxmYWxs4oCdLCDigJx5ZWFy4oCdLCDigJxHZW9Mb2NhdGlvbuKAnSkuCkxhdGl0dWRlIGFuZCBsb25naXR1ZGUgYXJlIHZhbGlkIHZhbHVlcy4gKExhdGl0dWRlIGJldHdlZW4gLTkwIGFuZCA5MCwgbG9uZ2l0dWRlIGJldHdlZW4gLTE4MCBhbmQgMTgwKS4KCgojIDEuMiBUaGUgLlJtZCBmaWxlCkluIHRoZSAuUm1kIGZpbGUgcGxlYXNlIGRvIHRoZSBmb2xsb3dpbmcuCgpSZWFkIHRoZSBjbGVhbmVkIGRhdGEgaW50byBSLgpGaW5kIHRoZSBuYW1lcyBhbmQgeWVhcnMgZm91bmQgZm9yIHRoZSAxMCBsYXJnZXN0IG1ldGVvcml0ZXMgaW4gdGhlIGRhdGEuCkZpbmQgdGhlIGF2ZXJhZ2UgbWFzcyBvZiBtZXRlb3JpdGVzIHRoYXQgd2VyZSByZWNvcmRlZCBmYWxsaW5nLCB2cy4gdGhvc2Ugd2hpY2ggd2VyZSBqdXN0IGZvdW5kLgpGaW5kIHRoZSBudW1iZXIgb2YgbWV0ZW9yaXRlcyBpbiBlYWNoIHllYXIsIGZvciBldmVyeSB5ZWFyIHNpbmNlIDIwMDAuCgojIDEuMyBUaGUgcHJvamVjdCBzdHJ1Y3R1cmUKTWFrZSBzdXJlIHlvdXIgdXNlIGFuIFJTdHVkaW8gUHJvamVjdC4KTWFrZSBhIG5ldyByZXBvIG9uIEdpdEh1YiAobm90IHlvdXIgbm9ybWFsIGhvbWV3b3JrIHJlcG8pIGFuZCBjb21taXQgeW91ciBjb2RlIHRvIHRoaXMgcmVwbyByZWd1bGFybHkgLSB3ZSB3aWxsIGJlIGNoZWNraW5nIHRoZSBudW1iZXIgb2YgY29tbWl0cy4KSXQgaXMgdXAgdG8geW91IGhvdyB0byBzdG9yZSB5b3VyIGNvZGUgYW5kIGRhdGEuIE1ha2Ugc3VyZSBpdCBpcyBjbGVhciBmb3Igb3RoZXJzIHVzaW5nIHRoZSBwcm9qZWN0LgoKIyBNeSBRdWVzdGlvbnMKV2hhdCBpcyBmZWxsIGFuZCBmb3VuZCBpbiBmYWxsCk9sZGVzdCBtZXRlb3JzCkF2ZXJhZ2UgbG9jYXRpb24gb2YgYSBtZXRlb3IgZmFsbApNb3N0IGZvdW5kIGJ5IGxhdGl0dWRlIGFuZCBsb25naXR1ZGUKWWVhciB3aXRoIHRoZSBoaWdoZXN0IG51bWJlciBvZiBtZXRlb3Jz</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBJIGRvbid0IHVuZGVyc3RhbmQgd2h5IHRoaXMgZG9lc24ndCB3b3JrLgoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGphbml0b3IpCmxpYnJhcnkoYXNzZXJ0cikKCm1ldGVvcl9yYXcgPC0gcmVhZF9jc3YoImRhdGEvbWV0ZW9yaXRlX2xhbmRpbmdzLmNzdiIpCmBgYAoKClRoaXMgcmV0dXJucyAnRXJyb3IgaW4gcmxhbmc6OmV2YWxfdGlkeShleHByLCBkYXRhLCBwYXJlbnQuZnJhbWUoKSkgOiBhcmd1bWVudCAiZXhwciIgaXMgbWlzc2luZywgd2l0aCBubyBkZWZhdWx0LApgYGB7cn0KdmVyaWZ5KAogIGFsbCgKICAgIGNvbG5hbWVzKG1ldGVvcl9yYXcpID09IGMoImlkIiwgIm5hbWUiLCAibWFzcyAoZykiLCAiZmFsbCIsICJ5ZWFyIiwgIkdlb0xvY2F0aW9uIikKICApCikKYGBgCkJ1dCB0aGlzIGRlZmluaXRlbHkgcmV0dXJucyBhIGxvZ2ljYWwhCmBgYHtyfQphbGwoCiAgICBjb2xuYW1lcyhtZXRlb3JfcmF3KSA9PSBjKCJpZCIsICJuYW1lIiwgIm1hc3MgKGcpIiwgImZhbGwiLCAieWVhciIsICJHZW9Mb2NhdGlvbiIpCiAgKQoKY2xhc3MoYWxsKAogICAgY29sbmFtZXMobWV0ZW9yX3JhdykgPT0gYygiaWQiLCAibmFtZSIsICJtYXNzIChnKSIsICJmYWxsIiwgInllYXIiLCAiR2VvTG9jYXRpb24iKQogICkpCmBgYAoK</div>
 
 
 
@@ -1869,7 +1890,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Questions.Rmd");
+  window.initializeSourceEmbed("things_to_revisit.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

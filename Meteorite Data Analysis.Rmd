@@ -102,9 +102,8 @@ Not obvious from the website, but the CodeClan questions helpfully point out tha
 
 # Does the amount of data recorded vary by time?
 
-## Number of NAs by century
-
 ```{r}
+# Number of NAs by century
 na_meteors %>% 
   mutate(
     year = case_when(
@@ -118,14 +117,35 @@ na_meteors %>%
     )
   ) %>% 
   group_by(year) %>% 
-  summarise(across(.fns = ~sum(is.na(.x)))) %>% 
+  summarise(across(.fns = ~sum(is.na(.x))), count = n()) %>% 
   print()
 ```
 This shows us that the main time periods for missing values are the 1900s and the 2000s.
 
+```{r}
+#Percentage of location NAs by decade
+
+na_meteors %>% 
+  mutate(
+    year = case_when(
+      year < 1600 ~ "1500s",
+      year < 1700 ~ "1600s",
+      year < 1800 ~ "1700s",
+      year < 1900 ~ "1800s",
+      year < 2000 ~ "1900s",
+      year < 2100 ~ "2000s",
+      year < 2200 ~ "2100s"
+    )
+  ) %>% 
+  group_by(year) %>% 
+  summarise(percent_missing_values = sum(is.na(latitude)) / n() * 100) %>% 
+  print()
+```
+From this percentage calculation we see that there is an increase in NA percentage in the 1900s, but he 2000s are a much bigger culprit.
+
 ## Number of NAs by decade
 ```{r}
-# Analyse NAs by time period from 1900 onwards
+# Count of NAs by decade from 1900 onwards
 
 na_meteors %>% 
   filter(year > 1930) %>% 
@@ -146,7 +166,7 @@ na_meteors %>%
     )
   ) %>% 
   group_by(year) %>% 
-  summarise(across(.fns = ~sum(is.na(.x)))) %>% 
+  summarise(across(.fns = ~sum(is.na(.x))), count = n()) %>% 
   print()
 
 ```
@@ -161,30 +181,22 @@ This will help us to explore whether citizen science plays a role in the number 
 ## Number of missing values from 1980-2013 based on whether the meteor was recorded while falling or after
 
 ```{r}
+# Count of missing values
 na_meteors %>% 
   filter(year > 1980) %>% 
   group_by(fall) %>% 
-  summarise(across(.fns = ~sum(is.na(.x))))
+  summarise(across(.fns = ~sum(is.na(.x))), n = n())
+
+# Missing location values as a percentage of meteors found
+na_meteors %>% 
+  filter(year > 1980) %>% 
+  group_by(fall) %>% 
+  summarise(percentage_missing_location = sum(is.na(latitude)) / n() * 100)
+           
 ```
 
-This shows that the vast majority of missing values are for meteors which have been found rather than recorded while falling.
+The count of missing values shows that the vast majority of missing values are for meteors which have been found rather than recorded while falling.
+There is an 18% chance of a found meteor having missing location values compared to 1% chance for those recorded falling
 This gives credence to the idea that missing values could be due to a lack of expertise or equipment, as you would be more likely to spot a meteor while falling with equipment and expertise than without.
 
 # Does the amount of data recorded vary by location?
-
-To get a rough idea of this, I would group meteor findings by latitude.
-
-```{r}
-#na_meteors %>% 
-#  mutate(
-#    longitude = case_when(
-#      longitude <= -80 ~ "-80 - -90"
-#    )
-```
-
-
-Number of meteor findings by location
-```{r}
-
-```
-

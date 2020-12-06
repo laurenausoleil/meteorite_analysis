@@ -3,43 +3,33 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-# For this weekend homework you will create an R project with two pieces of code:
+# I don't understand why this doesn't work.
 
-x An .R file that cleans some data on meteorites.
-A .Rmd file that takes your cleaned data and performs some analysis.
-You will also write a short README.md that describes the structure of your project.
+```{r}
+library(tidyverse)
+library(janitor)
+library(assertr)
 
-# x 1.1 The .R file
-To clean the data please do the following.
-
-Read the data into R
-Change the names of the variables to follow our naming standards.
-Split in column GeoLocation into latitude and longitude, the new latitude and longitude columns should be numeric.
-Replace any missing values in latitude and longitude with zeros.
-Remove meteorites less than 1000g in weight from the data.
-Order the data by the year of discovery.
-We would also like you to include assertive programming to make sure that:
-
-The data has the variable names we expect (“id”, “name”, “mass (g)”, “fall”, “year”, “GeoLocation”).
-Latitude and longitude are valid values. (Latitude between -90 and 90, longitude between -180 and 180).
+meteor_raw <- read_csv("data/meteorite_landings.csv")
+```
 
 
-# 1.2 The .Rmd file
-In the .Rmd file please do the following.
+This returns 'Error in rlang::eval_tidy(expr, data, parent.frame()) : argument "expr" is missing, with no default,
+```{r}
+verify(
+  all(
+    colnames(meteor_raw) == c("id", "name", "mass (g)", "fall", "year", "GeoLocation")
+  )
+)
+```
+But this definitely returns a logical!
+```{r}
+all(
+    colnames(meteor_raw) == c("id", "name", "mass (g)", "fall", "year", "GeoLocation")
+  )
 
-Read the cleaned data into R.
-Find the names and years found for the 10 largest meteorites in the data.
-Find the average mass of meteorites that were recorded falling, vs. those which were just found.
-Find the number of meteorites in each year, for every year since 2000.
+class(all(
+    colnames(meteor_raw) == c("id", "name", "mass (g)", "fall", "year", "GeoLocation")
+  ))
+```
 
-# 1.3 The project structure
-Make sure your use an RStudio Project.
-Make a new repo on GitHub (not your normal homework repo) and commit your code to this repo regularly - we will be checking the number of commits.
-It is up to you how to store your code and data. Make sure it is clear for others using the project.
-
-# My Questions
-What is fell and found in fall
-Oldest meteors
-Average location of a meteor fall
-Most found by latitude and longitude
-Year with the highest number of meteors
