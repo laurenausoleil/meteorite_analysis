@@ -18,13 +18,6 @@ meteor_raw <- read_csv("data/meteorite_landings.csv")
 meteor_raw %>% 
   verify(has_all_names("id", "name", "mass (g)", "fall", "year", "GeoLocation"))
 
-#This one doesn't work and I don't know why. The expression inside verify definitely returns TRUE.
-verify(
-  all(
-    colnames(meteor_raw) == c("id", "name", "mass (g)", "fall", "year", "GeoLocation")
-  )
-)
-
 
 # ----------------------
 # Cleaning
@@ -34,7 +27,6 @@ verify(
 # per questions and best practice
 meteor_clean <- meteor_raw %>% 
   clean_names()
-
 
 # Split column GeoLocation into latitude and longitude
 # per questions
