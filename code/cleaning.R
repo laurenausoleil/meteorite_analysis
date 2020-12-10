@@ -5,8 +5,9 @@
 library(tidyverse)
 library(janitor)
 library(assertr)
+library(here)
 
-meteor_raw <- read_csv("data/meteorite_landings.csv")
+meteor_raw <- read_csv(here("data/raw/meteorite_landings.csv"))
 
 # ----------------------
 # Assertive Programming
@@ -107,6 +108,6 @@ meteor_clean <- meteor_clean %>%
 
 #Export as .csv
 
-write_csv(meteor_clean, "data/meteor_clean.csv")
-write_csv(meteor_clean_over_1000, "data/meteor_over_1000")
-write_csv(meteor_keep_nas, "data/meteor_with_nas")
+write_csv(meteor_clean, "data/clean/meteor_clean.csv")
+write_csv(meteor_clean_over_1000, "data/clean/meteor_over_1000.csv")
+write_csv(meteor_keep_nas, "data/clean/meteor_with_nas.csv")

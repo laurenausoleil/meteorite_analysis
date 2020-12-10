@@ -6,12 +6,13 @@ output: html_document
 ---
 ```{r}
 library(tidyverse)
+library(here)
 ```
 
 ```{r}
-large_meteors <- read_csv("data/meteor_over_1000")
-all_meteors <- read_csv("data/meteor_clean.csv")
-na_meteors <- read_csv("data/meteor_with_nas")
+large_meteors <- read_csv(here("data/clean/meteor_over_1000.csv"))
+all_meteors <- read_csv(here("data/clean/meteor_clean.csv"))
+na_meteors <- read_csv(here("data/clean/meteor_with_nas.csv"))
 ```
 
 # Find the names and years found for the 10 largest meteorites in the data.
