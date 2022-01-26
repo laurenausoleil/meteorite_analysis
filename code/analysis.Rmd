@@ -7,6 +7,7 @@ output: html_document
 ```{r}
 library(tidyverse)
 library(here)
+library(testthat)
 ```
 
 ```{r}
@@ -96,6 +97,24 @@ get_meteorite_count(yr = 2030)
 
 
 ```
+
+# Write down ideas for how the function you've written could be improved and how you could test that the function works as it should. Please keep these 'test plans' in the final .Rmd, especially if you are completing the PDA.
+
+Improvements:
+* We could use assertive programming to check that the dataframe passed in looks as expected.
+* It would be good to include the year entered in the no meteorites recorded message.
+* We could extend the if else to check that the value in yr and num_meteors is numeric.
+
+Test Plans:
+* Build a test df in the with a year containing meteorites and a year with none.
+* Use testthat package to check that we get expected results
+
+# Write a unit test for your function to check whether non-numeric inputs (character and logical) for the year argument return an error.
+
+```{r}
+
+```
+
 
 
 # Does average size of a meteor recorded falling change over time?
