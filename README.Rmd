@@ -11,6 +11,4 @@ This project cleans and analyses NASA data for meteorite landings recorded betwe
 
 It was created as practice during my Data Analysis training with CodeClan in December 2020.
 
-You can explore the cleaned data as you wish or read the Meteorite Data Analysis document to see my analysis.
-
-In order to run the Analysis locally, you will need R and the tidyverse package.
+Outputs are the cleaned data and an analysis file.
