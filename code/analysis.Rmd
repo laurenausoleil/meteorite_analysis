@@ -17,7 +17,7 @@ na_meteors <- read_csv(here("data/clean/meteor_with_nas.csv"))
 
 # Find the names and years found for the 10 largest meteorites in the data.
 
-The 10 largest meteorites in this dataset were all found prior to 1947.
+The 10 largest meteorites in this dataset were all found prior to 1947, excluding Campo del Cielo, whose year of discovery in unrecorded.
 
 ```{r}
 large_meteors %>% 
@@ -66,6 +66,37 @@ large_meteors %>%
   summarise(number_of_meteors_recorded = sum(unique(id))) %>% 
   print()
 ```
+
+# Write a function called `get_meteorite_count()` that takes in two arguments: a dataframe and a year, and returns the phrase "In (input_year), there were (number of meteorites that year) meteorites." IF there are 1 or more meteorites that year. If there are no meteorites in the year, return the phrase "As far as we know, there were no meteorites that year".
+
+```{r}
+#Build a function which takes in two arguments - dataframe and year.
+get_meteorite_count <- function(df = all_meteors, yr) {
+
+#Build df which filters to year specified in yr
+  yr_df <- df %>%
+    filter(year == yr) %>% 
+    summarise(number_of_meteors_recorded = sum(unique(id)))
+#Assign value of number_of meteors_recorded to num_meteor variable
+  num_meteor <- yr_df$number_of_meteors_recorded
+  
+#If num_meteor is 0 message
+  if(num_meteor == 0) {
+     return("As far as we know, there were no meteorites that year") }
+  else {
+    return(
+      paste("In ", yr, ", there were ", num_meteor, " meteorites.", sep = "")
+    )
+  }
+}
+
+#Testing get_meteorite_count()
+get_meteorite_count(yr = 2006)
+get_meteorite_count(yr = 2030)
+
+
+```
+
 
 # Does average size of a meteor recorded falling change over time?
 
