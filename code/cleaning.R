@@ -40,7 +40,8 @@ meteor_clean <- meteor_clean %>%
   )
 
 # remove brackets and format as numeric or latitude and longitude
-# for clarity      # per questions
+# for clarity     
+# per questions
 meteor_clean <- meteor_clean %>% 
   mutate(
     latitude = as.numeric(str_remove(latitude, "\\(")),
@@ -92,7 +93,7 @@ meteor_keep_nas<- meteor_keep_nas %>%
 
 # Remove meteorites less than 1000g in weight from the data.
 # per questions
-# Removes 40893 observations so I created a new variable
+# Removes 40893 observations so I created a new variable in order to retain original data for future analysis.
 
 meteor_clean_over_1000 <- meteor_clean %>% 
   filter(mass_in_grams > 1000)
