@@ -112,9 +112,54 @@ Test Plans:
 # Write a unit test for your function to check whether non-numeric inputs (character and logical) for the year argument return an error.
 
 ```{r}
-
+ test_that("Non-numeric input in year returns an error", {
+   expect_error(get_meteorite_count(yr = "character"))
+   expect_error(get_meteorite_count(yr = TRUE))
+ })
 ```
 
+# Improve your function based on the result of your test. Instead of going back and changing the function, please create a new function that is the improved version called `refactor_get_meteorite_count()`.
+
+```{r}
+# Build a function which takes in two arguments - dataframe and year.
+refactor_get_meteorite_count <- function(df = all_meteors, yr) {
+  
+# Test whether input yr is numeric
+  
+  if(verify(is.numeric(yr))) {
+
+#Build df which filters to year specified in yr
+    yr_df <- df %>%
+      filter(year == yr) %>% 
+      summarise(number_of_meteors_recorded = sum(unique(id)))
+#Assign value of number_of meteors_recorded to num_meteor variable
+    num_meteor <- yr_df$number_of_meteors_recorded
+  
+#If num_meteor is 0 message
+    if(num_meteor == 0) {
+       return("As far as we know, there were no meteorites that year") 
+    }
+    else {
+      return(
+        paste("In ", yr, ", there were ", num_meteor, " meteorites.", sep = "")
+      )
+    }
+  }
+  else {
+    stop("Please input a numerical value for year input")
+  }
+}
+```
+
+
+# Test your function to make sure it now gives an error when you input a logical or character value as the year. **Hint:** You can use the `stop` function to create your own error message.
+
+```{r}
+ test_that("Non-numeric input in year returns an error", {
+   expect_error(refactor_get_meteorite_count(yr = "character"))
+   expect_error(refactor_get_meteorite_count(yr = TRUE))
+ })
+```
 
 
 # Does average size of a meteor recorded falling change over time?
